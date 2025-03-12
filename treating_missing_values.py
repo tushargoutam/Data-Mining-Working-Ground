@@ -466,8 +466,6 @@ class Treating_Missing_Values:
 
 
 
-
-
 import pandas as pd
 
 data = pd.read_csv('Raw_Housing_Prices.csv')
@@ -477,7 +475,6 @@ print(data.isnull().sum())
 print()
 data_null,missing_percentage = missing_values.display_missing_value()
 print('After')
-data.ffill()
 print(data_null)
 print(missing_percentage)
 
