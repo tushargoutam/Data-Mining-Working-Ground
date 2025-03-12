@@ -78,8 +78,9 @@ class Treating_Missing_Values:
             >>> cleaned_data = treatment.missing_value_deletion_byrow()
         '''
         #Dropping every row that has even one missing value
-        self.data.dropna(inplace=True,axis=0)
-        return self.data
+        temp = self.data
+        temp.dropna(inplace=True,axis=0)
+        return temp
     
     def missing_value_deletion_bycolumn(self,column_name = None):
         '''
@@ -123,13 +124,15 @@ class Treating_Missing_Values:
             >>> cleaned_data = treatment.missing_value_deletion_bycolumn(['A', 'B'])
         
         '''
+        #creating copy of data
+        temp = self.data
         # Dropping every column that has even one missing value
         if column_name == None:
-            self.data.dropna(inplace = True,axis = 1)
-            return self.data
+            temp.dropna(inplace = True,axis = 1)
+            return temp
         # if columns name as list is passed then it drops all those columns
-        self.data.drop(columns = column_name,inplace = True)
-        return self.data
+        temp.drop(columns = column_name,inplace = True)
+        return temp
     
     def missing_value_imputation_mean(self):
         '''
@@ -163,12 +166,14 @@ class Treating_Missing_Values:
                 
                 
         '''
+        #creating copy of data
+        temp = self.data
         # Imputing missing values with mean for columns with data type int64 or float64
-        for ele in self.data:
-            if self.data[ele].dtype == 'int64' or self.data[ele].dtype == 'float64':
-                self.data[ele] = self.data[ele].fillna(self.data[ele].mean())
+        for ele in temp:
+            if temp[ele].dtype == 'int64' or temp[ele].dtype == 'float64':
+                temp[ele] = temp[ele].fillna(temp[ele].mean())
                 
-        return self.data
+        return temp
     
     def missing_value_imputation_median(self):
         '''
@@ -201,13 +206,14 @@ class Treating_Missing_Values:
             # Perform median imputation on numeric columns
             >>> cleaned_data = treatment.missing_value_imputation_median()
         '''
-
+        #creating copy of data
+        temp = self.data
         # Imputing missing values with median for columns with data type int64 or float64
-        for ele in self.data:
-            if self.data[ele].dtype == 'int64' or self.data[ele].dtype == 'float64':
-                self.data[ele] = self.data[ele].fillna(self.data[ele].median())
+        for ele in temp:
+            if temp[ele].dtype == 'int64' or temp[ele].dtype == 'float64':
+                temp[ele] = temp.fillna(temp[ele].median())
                 
-        return self.data
+        return temp
 
     def missing_value_imputation_mode(self):
         ''' 
@@ -241,13 +247,15 @@ class Treating_Missing_Values:
             >>> cleaned_data = treatment.missing_value_imputation_mode()
         
         '''
+        #creating copy of data
+        temp = self.data
         # Code aims to replace every missing value with mode values
-        for ele in self.data.columns:
+        for ele in temp.columns:
             # Ensure mode exists before indexing
-            if not self.data[ele].mode().empty:  
-                self.data[ele] = self.data[ele].fillna(self.data[ele].mode()[0])
+            if not temp[ele].mode().empty:  
+                temp[ele] = temp[ele].fillna(temp[ele].mode()[0])
 
-        return self.data
+        return temp
 
     def missing_value_linear_interpolation(self):
         '''
@@ -311,10 +319,12 @@ class Treating_Missing_Values:
             - Pandas Documentation: https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.interpolate.html
 
         '''
-        for ele in self.data.columns:
-            if self.data[ele].dtype == 'int64' or self.data[ele].dtype == 'float64':
-                self.data[ele] = self.data[ele].interpolate(method="linear")
-        return self.data
+        #creating copy of data
+        temp = self.data
+        for ele in temp.columns:
+            if temp[ele].dtype == 'int64' or temp[ele].dtype == 'float64':
+                temp[ele] = temp[ele].interpolate(method="linear")
+        return temp
     
     def missing_value_polynomial_interploation(self,order_val):
         '''
@@ -377,10 +387,12 @@ class Treating_Missing_Values:
             ----------
             - Pandas Documentation: https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.interpolate.html
         '''
-        for ele in self.data.columns:
-            if self.data[ele].dtype == 'int64' or self.data[ele].dtype == 'float64':
-                self.data[ele] = self.data[ele].interpolate(method="polynomial",order = order_val)
-        return self.data
+        #creating copy of data
+        temp = self.data
+        for ele in temp.columns:
+            if temp[ele].dtype == 'int64' or temp[ele].dtype == 'float64':
+                temp[ele] = temp[ele].interpolate(method="polynomial",order = order_val)
+        return temp
 
     def missing_value_cubic_interpolation(self):
         '''
@@ -439,11 +451,12 @@ class Treating_Missing_Values:
             ----------
             - Pandas Documentation: https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.interpolate.html
         '''
-        
-        for ele in self.data.columns:
-            if self.data[ele].dtype == 'int64' or self.data[ele].dtype == 'float64':
-                self.data[ele] = self.data[ele].interpolate(method="cubic")
-        return self.data
+        #creating copy of data
+        temp = self.data
+        for ele in temp.columns:
+            if temp[ele].dtype == 'int64' or temp[ele].dtype == 'float64':
+                temp[ele] = temp[ele].interpolate(method="cubic")
+        return temp
     
     def missing_value_forward_fill(self):
         '''
@@ -458,10 +471,12 @@ class Treating_Missing_Values:
                         ,*
 
         '''
-        return self.data.ffill()
+        temp = self.data
+        return temp.ffill()
     
     def missing_value_backward_fill(self):
-        return self.data.bfill()
+        temp = self.data
+        return temp.bfill()
 
 
 
