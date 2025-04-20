@@ -4,10 +4,16 @@ class Duplicate_Removal:
         self.data = data
 
     def duplicate_removal(self):
-        '''
+        """
+            Removes duplicate rows from the dataset.
 
-        
-        '''
+            This method drops all duplicate entries from the `self.data` DataFrame,
+            retaining the first occurrence of each duplicate. It modifies the DataFrame
+            in place and returns the cleaned DataFrame.
+
+            Returns:
+                pd.DataFrame: The DataFrame after removing duplicate rows.
+        """
         self.data = self.data.drop_duplicates()
         return self.data
 
