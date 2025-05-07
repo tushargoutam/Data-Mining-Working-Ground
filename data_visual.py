@@ -102,7 +102,7 @@ class Data_Visualization:
         import seaborn as sns
         numeric_data = self.data.select_dtypes(include='number')
         sns.heatmap(numeric_data.corr(), annot=True, cmap='coolwarm')
-        plt.savefig('heatmap.png', dpi=300, bbox_inches='tight')
+        plt.savefig('plots/heatmap.png', dpi=300, bbox_inches='tight')
         plt.close()
 
     def count_plot(self, feature_name):
